@@ -15,6 +15,7 @@ import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import com.alphacli.Apps.AdvancedDNSLookup;
 import com.alphacli.Apps.Domain;
+import com.alphacli.Apps.SSLChecker;
 import com.alphacli.Argv.Arguments;
 
 
@@ -49,6 +50,7 @@ public class App
             }
 
             AdvancedDNSLookup adv = new AdvancedDNSLookup(domain_app.getDomain());
+            SSLChecker sc = new SSLChecker(domain_app.getDomain(),443);
 
             
 
@@ -94,9 +96,14 @@ public class App
                 System.out.println("[*] SOA Record " + domain_app.getDomain() + ":");
                 System.out.println(Arrays.toString(adv.getTXTRecords()));
             }
-            if (cmd.hasOption("ALL")) {
+            if (cmd.hasOption("rall")) {
                 System.out.println("[*] ALL Record " + domain_app.getDomain() + ":");
                 adv.runFullScan();
+            }
+
+            if (cmd.hasOption("sslc")) {
+                System.out.println("[*] Check SSL : " + domain_app.getDomain() + ":");
+                sc.checkSSL();
             }
             
         } catch (ParseException e) {

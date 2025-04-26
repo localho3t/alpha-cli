@@ -1,4 +1,4 @@
-# Alpha CLI (V1.1) - Domain to IP Resolver
+# Alpha CLI (V1.2) - Domain to IP Resolver
 
 ## Table of Contents
 1. [Overview](#overview)
@@ -77,12 +77,13 @@ java -jar alpha-cli.jar --help
 |---------|----------------------------|
 | `-A`    | Target A Record            |
 | `-AAAA` | Target AAAA Record         |
-| `-ALL`  | Target ALL Records         |
+| `-r-all`  | Target ALL Records         |
 | `-CNAME`| Target CNAME Record        |
 | `-MX`   | Target MX Record           |
 | `-NS`   | Target NS Record           |
 | `-SOA`  | Target SOA Record          |
 | `-TXT`  | Target TXT Record          |
+| `-s-ch`  | Check Target SSL          |
 
 
 ### Examples

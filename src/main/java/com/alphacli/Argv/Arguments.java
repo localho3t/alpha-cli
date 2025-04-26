@@ -67,11 +67,19 @@ public class Arguments {
         .build();
         options.addOption(txt_record);
 
-        Option all_records = Option.builder("ALL")
-        .argName("ALL")
+        Option all_records = Option.builder("rall")
+        .longOpt("record-all")
+        .argName("RAll")
         .desc("Target ALL Records")
         .build();
         options.addOption(all_records);
+
+        Option ssl_checker = Option.builder("sslc")
+        .longOpt("ssl-checker")
+        .argName("SCh")
+        .desc("Check Target ssl")
+        .build();
+        options.addOption(ssl_checker);
 
 
         return options;
