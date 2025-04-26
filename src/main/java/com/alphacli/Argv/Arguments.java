@@ -43,6 +43,36 @@ public class Arguments {
         .build();
         options.addOption(mx_record);
 
+        Option cname_record = Option.builder("CNAME")
+        .argName("CNAME")
+        .desc("Target CNAME Record")
+        .build();
+        options.addOption(cname_record);
+
+        Option ns_record = Option.builder("NS")
+        .argName("NS")
+        .desc("Target NS Record")
+        .build();
+        options.addOption(ns_record);
+
+        Option soa_record = Option.builder("SOA")
+        .argName("SOA")
+        .desc("Target SOA Record")
+        .build();
+        options.addOption(soa_record);
+
+        Option txt_record = Option.builder("TXT")
+        .argName("TXT")
+        .desc("Target TXT Record")
+        .build();
+        options.addOption(txt_record);
+
+        Option all_records = Option.builder("ALL")
+        .argName("ALL")
+        .desc("Target ALL Records")
+        .build();
+        options.addOption(all_records);
+
 
         return options;
     }

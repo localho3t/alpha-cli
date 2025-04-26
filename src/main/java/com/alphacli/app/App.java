@@ -47,7 +47,10 @@ public class App
                 domain_app.setDomain(cmd.getOptionValue("domain"));
                 System.out.println("[*] set domain : "+domain_app.getDomain());
             }
+
             AdvancedDNSLookup adv = new AdvancedDNSLookup(domain_app.getDomain());
+
+            
 
 
             if (cmd.hasOption("ip")) {
@@ -62,9 +65,38 @@ public class App
                 System.out.println(Arrays.toString(adv.getARecords()));
             }
 
+            if (cmd.hasOption("MX")) {
+                System.out.println("[*] MX Record " + domain_app.getDomain() + ":");
+                System.out.println(Arrays.toString(adv.getMXRecords()));
+            }
+
             if (cmd.hasOption("AAAA")) {
                 System.out.println("[*] AAAA Record " + domain_app.getDomain() + ":");
                 System.out.println(Arrays.toString(adv.getAAAARecords()));
+            }
+
+            if (cmd.hasOption("CNAME")) {
+                System.out.println("[*] CNAME Record " + domain_app.getDomain() + ":");
+                System.out.println(adv.getCNAMERecord());
+            }
+
+            if (cmd.hasOption("NS")) {
+                System.out.println("[*] NS Record " + domain_app.getDomain() + ":");
+                System.out.println(Arrays.toString(adv.getNSRecords()));
+            }
+
+            if (cmd.hasOption("SOA")) {
+                System.out.println("[*] SOA Record " + domain_app.getDomain() + ":");
+                System.out.println(adv.getSOARecord());
+            }
+
+            if (cmd.hasOption("TXT")) {
+                System.out.println("[*] SOA Record " + domain_app.getDomain() + ":");
+                System.out.println(Arrays.toString(adv.getTXTRecords()));
+            }
+            if (cmd.hasOption("ALL")) {
+                System.out.println("[*] ALL Record " + domain_app.getDomain() + ":");
+                adv.runFullScan();
             }
             
         } catch (ParseException e) {

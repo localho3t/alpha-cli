@@ -1,4 +1,4 @@
-# Alpha CLI - Domain to IP Resolver
+# Alpha CLI (V1.1) - Domain to IP Resolver
 
 ## Table of Contents
 1. [Overview](#overview)
@@ -15,13 +15,18 @@
 Alpha CLI is a powerful Java-based command-line utility that resolves domain names to their corresponding IP addresses. It supports various domain formats and provides flexible output options for integration with other tools and scripts.
 
 ## Features
-- ✅ Domain validation with comprehensive regex patterns
-- ✅ Supports both IPv4 and IPv6 resolution
-- ✅ Flexible command-line interface with multiple options
-- ✅ Cross-platform compatibility (Windows, Linux, macOS)
-- ✅ Comprehensive error handling and user feedback
-- ✅ Unit tested with JUnit 5 and Mockito
-
+- ✅ **Accurate Resolution**  
+  Domain validation with comprehensive regex patterns
+- ✅ **Dual Stack Support**  
+  Resolves both IPv4 (A) and IPv6 (AAAA) records
+- ✅ **Flexible Interface**  
+  Command-line options for all major DNS record types
+- ✅ **Cross-Platform**  
+  Runs on Windows, Linux, and macOS systems
+- ✅ **Robust Error Handling**  
+  Clear feedback for invalid domains/timeouts
+- ✅ **Verified Reliability**  
+  Unit tested with JUnit 5 and Mockito
 ## Installation
 
 ### Prerequisites
@@ -56,12 +61,28 @@ java -jar alpha-cli.jar -d example.com --ip
 java -jar alpha-cli.jar --help
 ```
 
-### Command Line Options
+# DNS Resolver Tool - Command Line Options
+
+## Main Options
+
 | Option        | Short Form | Description                          |
 |---------------|------------|--------------------------------------|
 | `--domain`    | `-d`       | Specify domain to resolve            |
-| `--ip`        |            | Display IP addresses for the domain  |
+| `--ip`        | `-ip`      | Display IP addresses for the domain  |
 | `--help`      | `-h`       | Show help message                    |
+
+## Record Type Options
+
+| Option  | Description                |
+|---------|----------------------------|
+| `-A`    | Target A Record            |
+| `-AAAA` | Target AAAA Record         |
+| `-ALL`  | Target ALL Records         |
+| `-CNAME`| Target CNAME Record        |
+| `-MX`   | Target MX Record           |
+| `-NS`   | Target NS Record           |
+| `-SOA`  | Target SOA Record          |
+| `-TXT`  | Target TXT Record          |
 
 
 ### Examples
