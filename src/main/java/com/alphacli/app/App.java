@@ -34,7 +34,6 @@ public class App
         CommandLineParser parser = new DefaultParser();
         HelpFormatter formatter = new HelpFormatter();
         CommandLine cmd;
-        AdvancedDNSLookup adv = new AdvancedDNSLookup();
         try {
             cmd = parser.parse(options, args);
             
@@ -48,6 +47,8 @@ public class App
                 domain_app.setDomain(cmd.getOptionValue("domain"));
                 System.out.println("[*] set domain : "+domain_app.getDomain());
             }
+            AdvancedDNSLookup adv = new AdvancedDNSLookup(domain_app.getDomain());
+
 
             if (cmd.hasOption("ip")) {
                 System.out.println("[*] IP addresses for " + domain_app.getDomain() + ":");
@@ -58,12 +59,12 @@ public class App
             
             if (cmd.hasOption("A")) {
                 System.out.println("[*] A Record " + domain_app.getDomain() + ":");
-                System.out.println(Arrays.toString(adv.getARecords(domain_app.getDomain())));
+                System.out.println(Arrays.toString(adv.getARecords()));
             }
 
             if (cmd.hasOption("AAAA")) {
                 System.out.println("[*] AAAA Record " + domain_app.getDomain() + ":");
-                System.out.println(Arrays.toString(adv.getAAAARecords(domain_app.getDomain())));
+                System.out.println(Arrays.toString(adv.getAAAARecords()));
             }
             
         } catch (ParseException e) {

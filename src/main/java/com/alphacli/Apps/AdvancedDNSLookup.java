@@ -7,8 +7,13 @@ import org.xbill.DNS.Record;
 import java.util.Arrays;
 
 public class AdvancedDNSLookup {
+    private String domain ;
+    
+    public AdvancedDNSLookup(String domain){
+        this.domain = domain;
+    }
     // Get A Records
-    public String[] getARecords(String domain){
+    public String[] getARecords(){
         try {
             Record[] records = new Lookup(domain,Type.A).run();
             return Arrays.stream(records)
@@ -20,7 +25,7 @@ public class AdvancedDNSLookup {
     }
 
     // get AAAA Records
-    public String[] getAAAARecords(String domain){
+    public String[] getAAAARecords(){
         try {
             Record[] records = new Lookup(domain,Type.AAAA).run();
             return Arrays.stream(records)
@@ -30,4 +35,7 @@ public class AdvancedDNSLookup {
             return new String[]{"Not Found"};
         }
     }
+
+    // get MX Record
+    // public String[] getMXRescords()
 }

@@ -37,6 +37,12 @@ public class Arguments {
         .build();
         options.addOption(aaaa_record);
 
+        Option mx_record = Option.builder("MX")
+        .argName("MX")
+        .desc("Target MX Record")
+        .build();
+        options.addOption(mx_record);
+
 
         return options;
     }
