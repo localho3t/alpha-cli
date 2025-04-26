@@ -25,6 +25,19 @@ public class Arguments {
         .build();
         options.addOption(ip);
 
+        Option a_record = Option.builder("A")
+        .argName("A")
+        .desc("Target A Record")
+        .build();
+        options.addOption(a_record);
+
+        Option aaaa_record = Option.builder("AAAA")
+        .argName("AAAA")
+        .desc("Target AAAA Record")
+        .build();
+        options.addOption(aaaa_record);
+
+
         return options;
     }
 }

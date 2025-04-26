@@ -1,3 +1,4 @@
 com\alphacli\app\App.class
+com\alphacli\Apps\AdvancedDNSLookup.class
 com\alphacli\Apps\Domain.class
 com\alphacli\Argv\Arguments.class

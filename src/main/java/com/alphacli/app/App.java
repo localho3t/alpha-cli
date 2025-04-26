@@ -4,6 +4,7 @@ package com.alphacli.app;
 
 
 import java.net.InetAddress;
+import java.util.Arrays;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
@@ -12,7 +13,7 @@ import org.apache.commons.cli.HelpFormatter;
 
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
-
+import com.alphacli.Apps.AdvancedDNSLookup;
 import com.alphacli.Apps.Domain;
 import com.alphacli.Argv.Arguments;
 
@@ -23,7 +24,7 @@ import com.alphacli.Argv.Arguments;
  */
 public class App 
 {
-    public static void main( String[] args )
+    public static void main( String[] args ) throws Exception
     {
         Arguments arg = new Arguments();
         Options options = arg.arguments();
@@ -33,6 +34,7 @@ public class App
         CommandLineParser parser = new DefaultParser();
         HelpFormatter formatter = new HelpFormatter();
         CommandLine cmd;
+        AdvancedDNSLookup adv = new AdvancedDNSLookup();
         try {
             cmd = parser.parse(options, args);
             
@@ -54,6 +56,15 @@ public class App
                 }
             }
             
+            if (cmd.hasOption("A")) {
+                System.out.println("[*] A Record " + domain_app.getDomain() + ":");
+                System.out.println(Arrays.toString(adv.getARecords(domain_app.getDomain())));
+            }
+
+            if (cmd.hasOption("AAAA")) {
+                System.out.println("[*] AAAA Record " + domain_app.getDomain() + ":");
+                System.out.println(Arrays.toString(adv.getAAAARecords(domain_app.getDomain())));
+            }
             
         } catch (ParseException e) {
             System.err.println("arguments exceptions : " + e.getMessage());

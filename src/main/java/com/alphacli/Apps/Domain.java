@@ -22,9 +22,9 @@ public class Domain {
         return addresses != null ? addresses : new InetAddress[0];
     }
 // setter
-    private void setAddresses(InetAddress[] addresses) {
-        this.addresses = addresses;
-    }
+    // private void setAddresses(InetAddress[] addresses) {
+    //     this.addresses = addresses;
+    // }
 
     public void setDomain(String domain){
         
