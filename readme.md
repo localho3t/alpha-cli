@@ -77,13 +77,13 @@ java -jar alpha-cli.jar --help
 |---------|----------------------------|
 | `-A`    | Target A Record            |
 | `-AAAA` | Target AAAA Record         |
-| `-r-all`  | Target ALL Records         |
+| `-rall`  | Target ALL Records         |
 | `-CNAME`| Target CNAME Record        |
 | `-MX`   | Target MX Record           |
 | `-NS`   | Target NS Record           |
 | `-SOA`  | Target SOA Record          |
 | `-TXT`  | Target TXT Record          |
-| `-s-ch`  | Check Target SSL          |
+| `-sslc`  | Check Target SSL          |
 
 
 ### Examples
