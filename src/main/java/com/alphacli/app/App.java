@@ -121,7 +121,11 @@ public class App
                 doc.setSsl_expiry_data(sc.get_expiryDate());
                 doc.setSsl_day_lefts(sc.get_daysLeft());
             }
-            doc.Export();
+
+            if (cmd.hasOption("epdf")) {
+                System.out.println("[*] Exporting ...");
+                doc.Export();
+            }
         } catch (ParseException e) {
             System.err.println("arguments exceptions : " + e.getMessage());
             formatter.printHelp("Alpha CLI ", options);

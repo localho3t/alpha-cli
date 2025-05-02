@@ -81,6 +81,13 @@ public class Arguments {
         .build();
         options.addOption(ssl_checker);
 
+        Option pdf_export = Option.builder("epdf")
+        .longOpt("export-pdf")
+        .argName("epdf")
+        .desc("export pdf")
+        .build();
+        options.addOption(pdf_export);
+
 
         return options;
     }
