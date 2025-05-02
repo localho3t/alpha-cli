@@ -3,7 +3,10 @@ package com.alphacli.app;
 
 
 
+import java.io.File;
+import java.io.IOException;
 import java.net.InetAddress;
+import java.net.MalformedURLException;
 import java.util.Arrays;
 
 import org.apache.commons.cli.CommandLine;
@@ -18,7 +21,6 @@ import com.alphacli.Apps.Domain;
 import com.alphacli.Apps.SSLChecker;
 import com.alphacli.Argv.Arguments;
 
-
 /**
  * Hello world!
  *
@@ -27,6 +29,8 @@ public class App
 {
     public static void main( String[] args ) throws Exception
     {
+        
+
         Arguments arg = new Arguments();
         Options options = arg.arguments();
 
