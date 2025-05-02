@@ -1,4 +1,6 @@
-# Alpha CLI (V1.2) - Domain to IP Resolver
+# Alpha CLI (V1.3) - Domain to IP Resolver
+
+![export pdf](img/sample.png)  
 
 ## Table of Contents
 1. [Overview](#overview)
@@ -15,22 +17,23 @@
 Alpha CLI is a powerful Java-based command-line utility that resolves domain names to their corresponding IP addresses. It supports various domain formats and provides flexible output options for integration with other tools and scripts.
 
 ## Features
-- ✅ **Accurate Resolution**  
-  Domain validation with comprehensive regex patterns
-- ✅ **Dual Stack Support**  
-  Resolves both IPv4 (A) and IPv6 (AAAA) records
-- ✅ **Flexible Interface**  
-  Command-line options for all major DNS record types
+- ✅ **DNS Resolution**  
+  Supports all major record types (A, AAAA, MX, CNAME, etc.)
+- ✅ **SSL Inspection**  
+  Detailed certificate information (issuer, expiry, subject)
+- ✅ **PDF Reporting**  
+  Generate professional PDF reports (`-epdf` option)
+- ✅ **Flexible Output**  
+  Console, text, and PDF output formats
 - ✅ **Cross-Platform**  
-  Runs on Windows, Linux, and macOS systems
-- ✅ **Robust Error Handling**  
-  Clear feedback for invalid domains/timeouts
-- ✅ **Verified Reliability**  
-  Unit tested with JUnit 5 and Mockito
-## Installation
+  Runs on Windows, Linux, and macOS
+
+### New Dependencies
+- iText 7.2.5 (PDF generation)
+- Bouncy Castle (SSL handling)
 
 ### Prerequisites
-- Java JDK 14 or later
+- Java JDK 23 or later
 - Maven 3.6.3 or later
 
 ### Installation Steps
@@ -77,13 +80,13 @@ java -jar alpha-cli.jar --help
 |---------|----------------------------|
 | `-A`    | Target A Record            |
 | `-AAAA` | Target AAAA Record         |
-| `-rall`  | Target ALL Records         |
 | `-CNAME`| Target CNAME Record        |
 | `-MX`   | Target MX Record           |
 | `-NS`   | Target NS Record           |
 | `-SOA`  | Target SOA Record          |
 | `-TXT`  | Target TXT Record          |
 | `-sslc`  | Check Target SSL          |
+| `-epdf`       | Export results as PDF                |
 
 
 ### Examples
@@ -111,8 +114,9 @@ alpha-cli/
 │   ├── main/
 │   │   └── java/com/alphacli/
 │   │       ├── app/            # Main application classes
-│   │       ├── Apps/           # Domain logic
+│   │       ├── Apps/           # App logic
 │   │       └── Argv/           # Command-line argument handling
+│   │       └── Utils/           # tools
 │   └── test/                   # Unit tests
 ├── target/                     # Build output
 └── pom.xml                     # Maven configuration
@@ -198,3 +202,5 @@ For issues and feature requests, please [open an issue](https://github.com/your-
 ---
 
 📝 **Note**: This is a production-ready CLI tool designed for system administrators and network engineers. The tool has been tested on Windows 10, Ubuntu 20.04, and macOS Big Sur.
+
+📝 **Note**: The PDF export feature requires write permissions in the execution directory. Reports are saved in `./reports/` by default.

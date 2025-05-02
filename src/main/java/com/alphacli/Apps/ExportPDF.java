@@ -2,10 +2,9 @@ package com.alphacli.Apps;
 
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.net.MalformedURLException;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
+import java.util.Date;
 
 import com.itextpdf.io.image.ImageData;
 import com.itextpdf.io.image.ImageDataFactory;
@@ -36,24 +35,24 @@ public class ExportPDF {
     private String ssl_expiry_data;
     private String ssl_day_lefts;
 
-    ExportPDF(String title,String[] ip){
+    public ExportPDF(String title){
         this.title = title;
         this.date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        this.ip = String.join(" - ", ip);
     }
 
 
     
-    public String Export(){
+    public void Export(){
         try {
-            
-            String name = "src/main/resources/exports-"+date;
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
+            String timestamp = dateFormat.format(new Date());
+            String name = "src/main/resources/exports/SSL_Report_" + timestamp + ".pdf";
             PdfWriter writer = new PdfWriter(new File(name));
             PdfDocument pdf = new PdfDocument(writer);
             Document document = new Document(pdf);
 
-            document.add(new Paragraph("PDF Export | "+title+" "+date)
-                    .setFontSize(18)
+            document.add(new Paragraph("PDF Export | "+title+" | "+timestamp)
+                    .setFontSize(16)
                     .setBold());
             
 
@@ -79,8 +78,8 @@ public class ExportPDF {
             document.add(new Paragraph("Data :").setBold());
             
             
-            Table table = new Table(UnitValue.createPercentArray(new float[]{1, 3, 3}));
-            table.setWidth(100);
+            Table table = new Table(UnitValue.createPercentArray(new float[]{2, 3, 2}))
+                    .useAllAvailableWidth();
             int rowNumber = 1;
             
             
@@ -161,18 +160,23 @@ public class ExportPDF {
                 table.addCell(new Cell().add(new Paragraph(ssl_day_lefts)));
             }
 
-            
             document.add(table);
-            
-
+        
             document.close();
-            return name;
         } catch (IOException e) {
             
-            return "PDF Error";
-
+            System.out.println(e);
         }
     }
+
+    public String getIp() {
+        return ip;
+    }
+
+    public void setIp(String ip) {
+        this.ip = ip;
+    }
+
     public String getA_records() {
         return a_records;
     }
