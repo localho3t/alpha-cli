@@ -203,4 +203,4 @@ For issues and feature requests, please [open an issue](https://github.com/your-
 
 📝 **Note**: This is a production-ready CLI tool designed for system administrators and network engineers. The tool has been tested on Windows 10, Ubuntu 20.04, and macOS Big Sur.
 
-📝 **Note**: The PDF export feature requires write permissions in the execution directory. Reports are saved in `./reports/` by default.
+📝 **Note**: The PDF export feature requires write permissions in the execution directory. Reports are saved in `./src/resource/exports` by default.

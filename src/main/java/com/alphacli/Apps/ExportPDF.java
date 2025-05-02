@@ -35,6 +35,9 @@ public class ExportPDF {
     private String ssl_expiry_data;
     private String ssl_day_lefts;
 
+    public SimpleDateFormat get_data(){
+        return this.date;
+    }
     public ExportPDF(String title){
         this.title = title;
         this.date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
