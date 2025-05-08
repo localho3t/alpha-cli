@@ -49,7 +49,7 @@ public class ExportPDF {
         try {
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
             String timestamp = dateFormat.format(new Date());
-            String name = "src/main/resources/exports/SSL_Report_" + timestamp + ".pdf";
+            String name = "src/main/resources/exports/Report_" + timestamp + ".pdf";
             PdfWriter writer = new PdfWriter(new File(name));
             PdfDocument pdf = new PdfDocument(writer);
             Document document = new Document(pdf);
