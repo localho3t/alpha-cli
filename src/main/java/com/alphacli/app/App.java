@@ -130,7 +130,7 @@ public class App
                     System.out.println("[*] scanning ...");
                     // SubdomainScanner ss = new SubdomainScanner(cmd.getOptionValue("subpath"), domain_app.getDomain(), 2);
                     // SubdomainScanner scanner = new SubdomainScanner(cmd.getOptionValue("subpath"), domain_app.getDomain(), 2);
-                    SubdomainScanner scanner = new SubdomainScanner(cmd.getOptionValue("subpath"), domain_app.getDomain(), 2);
+                    SubdomainScanner scanner = new SubdomainScanner(cmd.getOptionValue("subpath"), domain_app.getDomain(), 12);
                     List<SubdomainResult> results = scanner.scan();
                     List<Map<String, String>> exportData = new ArrayList<>();
                     for (SubdomainResult result : results) {
