@@ -1,4 +1,9 @@
+com\alphacli\Apps\ExportPDF.class
+com\alphacli\Apps\SubdomainScanner.class
+com\alphacli\Apps\SSLChecker.class
 com\alphacli\app\App.class
 com\alphacli\Apps\AdvancedDNSLookup.class
 com\alphacli\Apps\Domain.class
+com\alphacli\Utils\Utils.class
 com\alphacli\Argv\Arguments.class
+com\alphacli\Apps\SubdomainScanner$SubdomainResult.class

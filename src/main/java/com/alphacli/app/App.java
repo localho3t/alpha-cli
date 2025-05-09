@@ -17,6 +17,7 @@ import com.alphacli.Apps.AdvancedDNSLookup;
 import com.alphacli.Apps.Domain;
 import com.alphacli.Apps.ExportPDF;
 import com.alphacli.Apps.SSLChecker;
+import com.alphacli.Apps.SubdomainScanner;
 import com.alphacli.Argv.Arguments;
 import com.alphacli.Utils.Utils;
 
@@ -125,6 +126,16 @@ public class App
             if (cmd.hasOption("epdf")) {
                 System.out.println("[*] Exporting ...");
                 doc.Export();
+            }
+
+            if (cmd.hasOption("subscan")) {
+                if (cmd.hasOption("subpath")) {
+                    System.out.println("[*] scanning ...");
+                    SubdomainScanner ss = new SubdomainScanner(cmd.getOptionValue("subpath"), domain_app.getDomain(), 2);
+                    ss.scan();
+                }else{
+                    System.out.println("[*] subdomain wordlist path : not found!");
+                }
             }
         } catch (ParseException e) {
             System.err.println("arguments exceptions : " + e.getMessage());

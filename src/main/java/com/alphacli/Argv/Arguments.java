@@ -88,6 +88,20 @@ public class Arguments {
         .build();
         options.addOption(pdf_export);
 
+        Option subscan = Option.builder("subscan")
+        .longOpt("subdomain-scanner")
+        .argName("subscan")
+        .desc("subdomain scanner")
+        .build();
+        options.addOption(subscan);
+
+        Option subpath = Option.builder("subpath")
+        .longOpt("subdomain-path-file")
+        .argName("subpath")
+        .hasArg(true)
+        .desc("subdomain wordlist scanner")
+        .build();
+        options.addOption(subpath);
 
         return options;
     }
