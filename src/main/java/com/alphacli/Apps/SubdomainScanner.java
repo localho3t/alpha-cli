@@ -21,7 +21,7 @@ public class SubdomainScanner {
             String line;
             while ((line = reader.readLine()) != null) {
                 line = line.trim();
-                if (!line.isEmpty() && !line.startsWith("#")) { // خطوط خالی و کامنت‌ها را نادیده بگیر
+                if (!line.isEmpty() && !line.startsWith("#")) { 
                     subdomains.add(line);
                 }
             }
@@ -46,13 +46,13 @@ public class SubdomainScanner {
         List<Future<SubdomainResult>> futures = new ArrayList<>();
         List<SubdomainResult> results = new ArrayList<>();
         
-        // Submit all scanning tasks
+        
         for (String sub : lines) {
             String fullSubdomain = sub + "." + domain;
             futures.add(executor.submit(() -> scanSubdomain(fullSubdomain)));
         }
         
-        // Process results
+        
         int foundCount = 0;
         for (Future<SubdomainResult> future : futures) {
             try {

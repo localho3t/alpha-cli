@@ -38,7 +38,7 @@ public class ExportPDF {
     private String ssl_issuer;
     private String ssl_expiry_data;
     private String ssl_day_lefts;
-    private List<Map<String, String>> subdomains; // لیست ساب‌دامنه‌ها
+    private List<Map<String, String>> subdomains;
 
     public ExportPDF(String title) {
         this.title = title;
@@ -55,23 +55,23 @@ public class ExportPDF {
             String timestamp = dateFormat.format(new Date());
             String name = "src/main/resources/exports/Report_" + timestamp + ".pdf";
             
-            // ایجاد دایرکتوری اگر وجود نداشته باشد
+
             new File("src/main/resources/exports").mkdirs();
             
             PdfWriter writer = new PdfWriter(new File(name));
             PdfDocument pdf = new PdfDocument(writer);
             Document document = new Document(pdf);
 
-            // هدر گزارش
+
             addReportHeader(document, timestamp);
             
-            // اضافه کردن لوگو
+
             addLogo(document);
             
-            // بخش اطلاعات اصلی
+
             addMainInfoSection(document);
             
-            // بخش ساب‌دامنه‌ها
+
             if (subdomains != null && !subdomains.isEmpty()) {
                 addSubdomainsSection(document);
             }
@@ -121,10 +121,10 @@ public class ExportPDF {
                 .useAllAvailableWidth()
                 .setMarginTop(10);
         
-        // هدر جدول
+
         addTableHeader(mainTable);
         
-        // اضافه کردن رکوردها
+
         addRecordIfExists(mainTable, "IP Address", ip);
         addRecordIfExists(mainTable, "A Record", a_records);
         addRecordIfExists(mainTable, "AAAA Record", aaaa_records);
@@ -149,24 +149,24 @@ public class ExportPDF {
                 .useAllAvailableWidth()
                 .setMarginTop(10);
         
-        // هدر جدول ساب‌دامنه‌ها
+
         addTableHeader(subdomainsTable);
         
-        // اضافه کردن ساب‌دامنه‌ها
-        // int counter = 1;
+
+
         for (Map<String, String> subdomain : subdomains) {
             String subdomainName = subdomain.get("name");
             String subdomainIp = subdomain.get("ip");
             
-            // subdomainsTable.addCell(new Cell().add(new Paragraph(String.valueOf(counter++)))
-                                                // .setTextAlignment(TextAlignment.CENTER));
+
+
             subdomainsTable.addCell(new Cell().add(new Paragraph(subdomainName)));
             subdomainsTable.addCell(new Cell().add(new Paragraph(subdomainIp != null ? subdomainIp : "N/A")));
         }
         
         document.add(subdomainsTable);
         
-        // خلاصه ساب‌دامنه‌ها
+
         Paragraph summary = new Paragraph(String.format(
                 "Total subdomains discovered: %d", subdomains.size()))
                 .setBold()

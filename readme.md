@@ -1,4 +1,4 @@
-# Alpha CLI (V1.3) - Domain to IP Resolver
+# Alpha CLI (V1.5) - Domain to IP Resolver
 
 ![export pdf](img/sample.png)  
 
@@ -50,7 +50,7 @@ Alpha CLI is a powerful Java-based command-line utility that resolves domain nam
 
 3. **Run the application**:
    ```bash
-   java -jar target/alpha-cli-1.0-SNAPSHOT-jar-with-dependencies.jar -d yahoo.com -ip
+   java -jar target/alpha-cli-1.5-jar-with-dependencies.jar -d yahoo.com -ip
    ```
 
 ## Usage
@@ -85,6 +85,8 @@ java -jar alpha-cli.jar --help
 | `-NS`   | Target NS Record           |
 | `-SOA`  | Target SOA Record          |
 | `-TXT`  | Target TXT Record          |
+| `-subscan`  | scan target subdomains          |
+| `-subpath`  | targets subdomain files          |
 | `-sslc`  | Check Target SSL          |
 | `-epdf`       | Export results as PDF                |
 
@@ -162,7 +164,7 @@ Using jpackage (requires JDK 14+):
 ```bash
 jpackage --input target/ \
          --name AlphaCLI \
-         --main-jar alpha-cli-1.0-SNAPSHOT-jar-with-dependencies.jar \
+         --main-jar alpha-cli-1.5-jar-with-dependencies.jar \
          --main-class com.alphacli.app.App \
          --type exe \
          --win-console
