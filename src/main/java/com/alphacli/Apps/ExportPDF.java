@@ -5,9 +5,12 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 import com.itextpdf.io.image.ImageData;
 import com.itextpdf.io.image.ImageDataFactory;
+import com.itextpdf.kernel.colors.ColorConstants;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
@@ -17,12 +20,13 @@ import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Table;
 import com.itextpdf.layout.properties.HorizontalAlignment;
 import com.itextpdf.layout.properties.UnitValue;
+import com.itextpdf.layout.properties.TextAlignment;
 
 public class ExportPDF {
 
-    private String title ;
+    private String title;
     private SimpleDateFormat date;
-    private String ip ;
+    private String ip;
     private String a_records;
     private String aaaa_records;
     private String mx_records;
@@ -34,141 +38,151 @@ public class ExportPDF {
     private String ssl_issuer;
     private String ssl_expiry_data;
     private String ssl_day_lefts;
+    private List<Map<String, String>> subdomains; // لیست ساب‌دامنه‌ها
 
-    public SimpleDateFormat get_data(){
-        return this.date;
-    }
-    public ExportPDF(String title){
+    public ExportPDF(String title) {
         this.title = title;
         this.date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     }
 
+    public void setSubdomains(List<Map<String, String>> subdomains) {
+        this.subdomains = subdomains;
+    }
 
-    
-    public void Export(){
+    public void exportToPdf() {
         try {
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
             String timestamp = dateFormat.format(new Date());
             String name = "src/main/resources/exports/Report_" + timestamp + ".pdf";
+            
+            // ایجاد دایرکتوری اگر وجود نداشته باشد
+            new File("src/main/resources/exports").mkdirs();
+            
             PdfWriter writer = new PdfWriter(new File(name));
             PdfDocument pdf = new PdfDocument(writer);
             Document document = new Document(pdf);
 
-            document.add(new Paragraph("PDF Export | "+title+" | "+timestamp)
-                    .setFontSize(16)
-                    .setBold());
+            // هدر گزارش
+            addReportHeader(document, timestamp);
             
-
-            try {
-                
-                String image_path = "src/main/resources/images/logo.png";
-
-                ImageData imageData = ImageDataFactory.create(image_path);
-                Image image = new Image(imageData);
-                
-                image.scaleToFit(300, 200);
-                
-                image.setHorizontalAlignment(HorizontalAlignment.CENTER);
-                
-                document.add(image);
-                document.add(new Paragraph("\n")); 
-                
-            } catch (MalformedURLException e) {
-                System.err.println("Image Not Found: " + e.getMessage());
-            }
+            // اضافه کردن لوگو
+            addLogo(document);
             
+            // بخش اطلاعات اصلی
+            addMainInfoSection(document);
             
-            document.add(new Paragraph("Data :").setBold());
-            
-            
-            Table table = new Table(UnitValue.createPercentArray(new float[]{2, 3, 2}))
-                    .useAllAvailableWidth();
-            int rowNumber = 1;
-            
-            
-            table.addHeaderCell(new Cell().add(new Paragraph("Record").setBold()));
-            table.addHeaderCell(new Cell().add(new Paragraph("Title").setBold()));
-            table.addHeaderCell(new Cell().add(new Paragraph("Value").setBold()));
-            
-            if (a_records != null && !a_records.isEmpty()) {
-                table.addCell(new Cell().add(new Paragraph(String.valueOf(rowNumber++))));
-                table.addCell(new Cell().add(new Paragraph("A Record").setBold()));
-                table.addCell(new Cell().add(new Paragraph(a_records)));
+            // بخش ساب‌دامنه‌ها
+            if (subdomains != null && !subdomains.isEmpty()) {
+                addSubdomainsSection(document);
             }
 
-            
-            if (aaaa_records != null && !aaaa_records.isEmpty()) {
-                table.addCell(new Cell().add(new Paragraph(String.valueOf(rowNumber++))));
-                table.addCell(new Cell().add(new Paragraph("AAAA Record").setBold()));
-                table.addCell(new Cell().add(new Paragraph(aaaa_records)));
-            }
-
-            
-            if (cname_records != null && !cname_records.isEmpty()) {
-                table.addCell(new Cell().add(new Paragraph(String.valueOf(rowNumber++))));
-                table.addCell(new Cell().add(new Paragraph("CNAME Record").setBold()));
-                table.addCell(new Cell().add(new Paragraph(cname_records)));
-            }
-
-            
-            if (mx_records != null && !mx_records.isEmpty()) {
-                table.addCell(new Cell().add(new Paragraph(String.valueOf(rowNumber++))));
-                table.addCell(new Cell().add(new Paragraph("MX Record").setBold()));
-                table.addCell(new Cell().add(new Paragraph(mx_records)));
-            }
-
-            
-            if (txt_records != null && !txt_records.isEmpty()) {
-                table.addCell(new Cell().add(new Paragraph(String.valueOf(rowNumber++))));
-                table.addCell(new Cell().add(new Paragraph("TXT Record").setBold()));
-                table.addCell(new Cell().add(new Paragraph(txt_records)));
-            }
-
-            
-            if (ns_records != null && !ns_records.isEmpty()) {
-                table.addCell(new Cell().add(new Paragraph(String.valueOf(rowNumber++))));
-                table.addCell(new Cell().add(new Paragraph("NS Record").setBold()));
-                table.addCell(new Cell().add(new Paragraph(ns_records)));
-            }
-
-            
-            if (soa_records != null && !soa_records.isEmpty()) {
-                table.addCell(new Cell().add(new Paragraph(String.valueOf(rowNumber++))));
-                table.addCell(new Cell().add(new Paragraph("SOA Record").setBold()));
-                table.addCell(new Cell().add(new Paragraph(soa_records)));
-            }
-
-            
-            if (ssl_subject != null && !ssl_subject.isEmpty()) {
-                table.addCell(new Cell().add(new Paragraph(String.valueOf(rowNumber++))));
-                table.addCell(new Cell().add(new Paragraph("SSL Subject").setBold()));
-                table.addCell(new Cell().add(new Paragraph(ssl_subject)));
-            }
-
-            if (ssl_issuer != null && !ssl_issuer.isEmpty()) {
-                table.addCell(new Cell().add(new Paragraph(String.valueOf(rowNumber++))));
-                table.addCell(new Cell().add(new Paragraph("SSL Issuer").setBold()));
-                table.addCell(new Cell().add(new Paragraph(ssl_issuer)));
-            }
-
-            if (ssl_expiry_data != null && !ssl_expiry_data.isEmpty()) {
-                table.addCell(new Cell().add(new Paragraph(String.valueOf(rowNumber++))));
-                table.addCell(new Cell().add(new Paragraph("SSL Expiry Date").setBold()));
-                table.addCell(new Cell().add(new Paragraph(ssl_expiry_data)));
-            }
-
-            if (ssl_day_lefts != null && !ssl_day_lefts.isEmpty()) {
-                table.addCell(new Cell().add(new Paragraph(String.valueOf(rowNumber++))));
-                table.addCell(new Cell().add(new Paragraph("SSL Days Left").setBold()));
-                table.addCell(new Cell().add(new Paragraph(ssl_day_lefts)));
-            }
-
-            document.add(table);
-        
             document.close();
+            System.out.println("PDF report generated successfully: " + name);
         } catch (IOException e) {
+            System.err.println("Error generating PDF: " + e.getMessage());
+        }
+    }
+
+    private void addReportHeader(Document document, String timestamp) {
+        Paragraph header = new Paragraph("Scan Report - " + title)
+                .setFontSize(18)
+                .setBold()
+                .setTextAlignment(TextAlignment.CENTER)
+                .setFontColor(ColorConstants.BLUE);
+        document.add(header);
+        
+        Paragraph subHeader = new Paragraph("Generated on: " + timestamp)
+                .setFontSize(12)
+                .setTextAlignment(TextAlignment.CENTER)
+                .setItalic();
+        document.add(subHeader);
+        
+        document.add(new Paragraph("\n"));
+    }
+
+    private void addLogo(Document document) {
+        try {
+            String imagePath = "src/main/resources/images/logo.png";
+            ImageData imageData = ImageDataFactory.create(imagePath);
+            Image image = new Image(imageData);
+            image.scaleToFit(150, 100);
+            image.setHorizontalAlignment(HorizontalAlignment.CENTER);
+            document.add(image);
+            document.add(new Paragraph("\n"));
+        } catch (MalformedURLException e) {
+            System.err.println("Logo image not found: " + e.getMessage());
+        }
+    }
+
+    private void addMainInfoSection(Document document) {
+        document.add(new Paragraph("Scan Results").setBold().setUnderline());
+        
+        Table mainTable = new Table(UnitValue.createPercentArray(new float[]{50,50}))
+                .useAllAvailableWidth()
+                .setMarginTop(10);
+        
+        // هدر جدول
+        addTableHeader(mainTable);
+        
+        // اضافه کردن رکوردها
+        addRecordIfExists(mainTable, "IP Address", ip);
+        addRecordIfExists(mainTable, "A Record", a_records);
+        addRecordIfExists(mainTable, "AAAA Record", aaaa_records);
+        addRecordIfExists(mainTable, "CNAME Record", cname_records);
+        addRecordIfExists(mainTable, "MX Record", mx_records);
+        addRecordIfExists(mainTable, "TXT Record", txt_records);
+        addRecordIfExists(mainTable, "NS Record", ns_records);
+        addRecordIfExists(mainTable, "SOA Record", soa_records);
+        addRecordIfExists(mainTable, "SSL Subject", ssl_subject);
+        addRecordIfExists(mainTable, "SSL Issuer", ssl_issuer);
+        addRecordIfExists(mainTable, "SSL Expiry Date", ssl_expiry_data);
+        addRecordIfExists(mainTable, "SSL Days Left", ssl_day_lefts);
+        
+        document.add(mainTable);
+        document.add(new Paragraph("\n"));
+    }
+
+    private void addSubdomainsSection(Document document) {
+        document.add(new Paragraph("Discovered Subdomains").setBold().setUnderline());
+        
+        Table subdomainsTable = new Table(UnitValue.createPercentArray(new float[]{50,50}))
+                .useAllAvailableWidth()
+                .setMarginTop(10);
+        
+        // هدر جدول ساب‌دامنه‌ها
+        addTableHeader(subdomainsTable);
+        
+        // اضافه کردن ساب‌دامنه‌ها
+        // int counter = 1;
+        for (Map<String, String> subdomain : subdomains) {
+            String subdomainName = subdomain.get("name");
+            String subdomainIp = subdomain.get("ip");
             
-            System.out.println(e);
+            // subdomainsTable.addCell(new Cell().add(new Paragraph(String.valueOf(counter++)))
+                                                // .setTextAlignment(TextAlignment.CENTER));
+            subdomainsTable.addCell(new Cell().add(new Paragraph(subdomainName)));
+            subdomainsTable.addCell(new Cell().add(new Paragraph(subdomainIp != null ? subdomainIp : "N/A")));
+        }
+        
+        document.add(subdomainsTable);
+        
+        // خلاصه ساب‌دامنه‌ها
+        Paragraph summary = new Paragraph(String.format(
+                "Total subdomains discovered: %d", subdomains.size()))
+                .setBold()
+                .setItalic();
+        document.add(summary);
+    }
+
+    private void addTableHeader(Table table) {
+        table.addHeaderCell(new Cell().add(new Paragraph("Record").setBold()));
+        table.addHeaderCell(new Cell().add(new Paragraph("Value").setBold()));
+    }
+
+    private void addRecordIfExists(Table table, String title, String value) {
+        if (value != null && !value.isEmpty()) {
+            table.addCell(new Cell().add(new Paragraph(title).setBold()));
+            table.addCell(new Cell().add(new Paragraph(value)));
         }
     }
 
