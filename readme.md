@@ -23,6 +23,8 @@ Alpha CLI is a powerful Java-based command-line utility that resolves domain nam
   Detailed certificate information (issuer, expiry, subject)
 - ✅ **PDF Reporting**  
   Generate professional PDF reports (`-epdf` option)
+- ✅ **Scan Subdomain**  
+  scan target with 12 Thread (`-subscan` option , `-subpath` Required)
 - ✅ **Flexible Output**  
   Console, text, and PDF output formats
 - ✅ **Cross-Platform**  
