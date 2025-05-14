@@ -24,7 +24,7 @@ Alpha CLI is a powerful Java-based command-line utility that resolves domain nam
 - ✅ **PDF Reporting**  
   Generate professional PDF reports (`-epdf` option)
 - ✅ **Scan Subdomain**  
-  scan target with 12 Thread (`-subscan` option , `-subpath` Required)
+  Scan target with 12 threads (`-subscan` option, `-subpath` required)
 - ✅ **Flexible Output**  
   Console, text, and PDF output formats
 - ✅ **Cross-Platform**  
@@ -38,19 +38,40 @@ Alpha CLI is a powerful Java-based command-line utility that resolves domain nam
 - Java JDK 23 or later
 - Maven 3.6.3 or later
 
-### Installation Steps
+## Installation
+
+### Option 1: Download Prebuilt Release (Recommended)
+1. Go to the [Releases](https://github.com/localho3t/alpha-cli/releases) section.
+2. Download the latest `AlphaCli.exe` file.
+3. Create a `.bat` file named `run.bat` with the following content to ensure the console window stays open after execution:
+
+   ```bat
+   @echo off
+   AlphaCli.exe
+   echo.
+   echo Press any key to continue...
+   pause > nul
+   ```
+
+4. Double-click `run.bat` to launch the CLI tool.
+
+### Option 2: Build from Source
+
 1. **Clone the repository**:
+
    ```bash
    git clone https://github.com/localho3t/alpha-cli.git
    cd alpha-cli
    ```
 
 2. **Build the project**:
+
    ```bash
    mvn clean package
    ```
 
 3. **Run the application**:
+
    ```bash
    java -jar target/alpha-cli-1.5-jar-with-dependencies.jar -d yahoo.com -ip
    ```
@@ -58,6 +79,7 @@ Alpha CLI is a powerful Java-based command-line utility that resolves domain nam
 ## Usage
 
 ### Basic Commands
+
 ```bash
 # Resolve a domain to IP addresses
 java -jar alpha-cli.jar -d example.com --ip
@@ -66,45 +88,48 @@ java -jar alpha-cli.jar -d example.com --ip
 java -jar alpha-cli.jar --help
 ```
 
-# DNS Resolver Tool - Command Line Options
+## DNS Resolver Tool - Command Line Options
 
-## Main Options
+### Main Options
 
-| Option        | Short Form | Description                          |
-|---------------|------------|--------------------------------------|
-| `--domain`    | `-d`       | Specify domain to resolve            |
-| `--ip`        | `-ip`      | Display IP addresses for the domain  |
-| `--help`      | `-h`       | Show help message                    |
+| Option     | Short Form | Description                         |
+| ---------- | ---------- | ----------------------------------- |
+| `--domain` | `-d`       | Specify domain to resolve           |
+| `--ip`     | `-ip`      | Display IP addresses for the domain |
+| `--help`   | `-h`       | Show help message                   |
 
-## Record Type Options
+### Record Type Options
 
-| Option  | Description                |
-|---------|----------------------------|
-| `-A`    | Target A Record            |
-| `-AAAA` | Target AAAA Record         |
-| `-CNAME`| Target CNAME Record        |
-| `-MX`   | Target MX Record           |
-| `-NS`   | Target NS Record           |
-| `-SOA`  | Target SOA Record          |
-| `-TXT`  | Target TXT Record          |
-| `-subscan`  | scan target subdomains          |
-| `-subpath`  | targets subdomain files          |
-| `-sslc`  | Check Target SSL          |
-| `-epdf`       | Export results as PDF                |
-
+| Option     | Description             |
+| ---------- | ----------------------- |
+| `-A`       | Target A Record         |
+| `-AAAA`    | Target AAAA Record      |
+| `-CNAME`   | Target CNAME Record     |
+| `-MX`      | Target MX Record        |
+| `-NS`      | Target NS Record        |
+| `-SOA`     | Target SOA Record       |
+| `-TXT`     | Target TXT Record       |
+| `-subscan` | Scan target subdomains  |
+| `-subpath` | Targets subdomain files |
+| `-sslc`    | Check Target SSL        |
+| `-epdf`    | Export results as PDF   |
 
 ### Examples
+
 1. **Simple domain resolution**:
+
    ```bash
    java -jar alpha-cli.jar -d google.com --ip
    ```
 
 2. **Multiple domains from file** (using xargs):
+
    ```bash
    cat domains.txt | xargs -I {} java -jar alpha-cli.jar -d {} --ip
    ```
 
 3. **Save output to file**:
+
    ```bash
    java -jar alpha-cli.jar -d example.com --ip > output.txt
    ```
@@ -112,6 +137,7 @@ java -jar alpha-cli.jar --help
 ## Development
 
 ### Project Structure
+
 ```
 alpha-cli/
 ├── src/
@@ -120,18 +146,20 @@ alpha-cli/
 │   │       ├── app/            # Main application classes
 │   │       ├── Apps/           # App logic
 │   │       └── Argv/           # Command-line argument handling
-│   │       └── Utils/           # tools
+│   │       └── Utils/          # Utility tools
 │   └── test/                   # Unit tests
 ├── target/                     # Build output
 └── pom.xml                     # Maven configuration
 ```
 
 ### Dependencies
-- Apache Commons CLI - Command line parsing
-- JUnit 5 - Unit testing framework
-- Mockito - Mocking framework for tests
+
+* Apache Commons CLI - Command line parsing
+* JUnit 5 - Unit testing framework
+* Mockito - Mocking framework for tests
 
 ### Building from Source
+
 ```bash
 # Build with tests
 mvn clean package
@@ -143,26 +171,33 @@ mvn clean package -DskipTests
 ## Testing
 
 ### Running Tests
+
 ```bash
 mvn test
 ```
 
 ### Test Coverage
+
 To generate test coverage report:
+
 ```bash
 mvn jacoco:report
 ```
+
 Open `target/site/jacoco/index.html` in your browser.
 
 ## Build & Deployment
 
 ### Creating Executable JAR
+
 ```bash
 mvn clean package
 ```
 
 ### Creating Native Executable (Windows .exe)
+
 Using jpackage (requires JDK 14+):
+
 ```bash
 jpackage --input target/ \
          --name AlphaCLI \
@@ -171,15 +206,6 @@ jpackage --input target/ \
          --type exe \
          --win-console
 ```
-
-### Distribution Packages
-1. **Windows**:
-   - `.exe` installer (via jpackage)
-   - Portable ZIP package
-
-2. **Linux/macOS**:
-   - `.deb`/`.rpm` packages
-   - Portable TAR archive
 
 ## Contributing
 
@@ -192,15 +218,18 @@ We welcome contributions! Please follow these steps:
 5. Open a Pull Request
 
 ### Coding Standards
-- Follow Google Java Style Guide
-- Write unit tests for new features
-- Document public APIs with Javadoc
-- Keep commits atomic and well-described
+
+* Follow Google Java Style Guide
+* Write unit tests for new features
+* Document public APIs with Javadoc
+* Keep commits atomic and well-described
 
 ## License
+
 Distributed under the MIT License. See `LICENSE` for more information.
 
 ## Support
+
 For issues and feature requests, please [open an issue](https://github.com/your-repo/alpha-cli/issues) on GitHub.
 
 ---
